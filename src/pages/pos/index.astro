@@ -1,0 +1,279 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProduct } from '../../data/products';
+
+const product = getProduct('pos')!;
+const title = `Garfenter ${product.name} | ${product.title}`;
+const description = product.description;
+---
+
+<Layout title={title} description={description}>
+  <Header variant="product" productName={product.name} />
+
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-32 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 mb-6">
+            <span class="badge badge-primary">{product.categoryLabel}</span>
+            <span class="badge badge-success">Basado en {product.basedOn}</span>
+          </div>
+
+          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+            {product.title}
+          </h1>
+
+          <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+            {product.subtitle}
+          </p>
+
+          <p class="text-lg text-gray-600 mb-10">
+            {product.description}
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href={product.demoUrl} class="btn btn-primary text-lg px-8 py-4">
+              Ver Demo en Vivo
+            </a>
+            <a href="/#productos" class="btn btn-secondary text-lg px-8 py-4">
+              Ver Más Productos
+            </a>
+          </div>
+
+          <div class="mt-12 flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-600">
+            {product.techStack.map(tech => (
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="animate-fade-in-up" style="animation-delay: 0.4s">
+          <picture>
+            <source srcset="/images/hero/pos.webp" type="image/webp">
+            <img
+              src="/images/hero/pos.png"
+              alt="Sistema punto de venta en mostrador de tienda"
+              class="rounded-2xl shadow-2xl w-full"
+              width="800"
+              height="450"
+              loading="eager"
+            >
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          Características Principales
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Sistema de punto de venta completo y fácil de usar para tu negocio
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {product.features.map(feature => (
+          <div class="card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">
+              {feature.icon}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              {feature.title}
+            </h3>
+            <p class="text-gray-600">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section section-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Sin Límites, Sin Costos Ocultos
+          </h2>
+          <p class="text-xl text-gray-600">
+            POS profesional diseñado para pequeños y medianos negocios
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          {product.benefits.map(benefit => (
+            <div class="text-center">
+              <div class="text-5xl font-bold text-green-600 mb-3">
+                {benefit.number}
+              </div>
+              <div class="text-lg text-gray-700 font-medium">
+                {benefit.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Perfecto Para Tu Negocio
+          </h2>
+          <p class="text-xl text-gray-600">
+            Diseñado para adaptarse a diferentes tipos de comercios
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          {product.useCases.map(useCase => (
+            <div class="flex items-start gap-4 p-6 bg-green-50 rounded-lg">
+              <div class="flex-shrink-0 w-6 h-6 rounded-full bg-green-600 flex items-center justify-center text-white text-sm font-bold">
+                ✓
+              </div>
+              <div class="text-lg text-gray-800 font-medium">
+                {useCase}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section class="section section-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Cómo Funciona
+          </h2>
+          <p class="text-xl text-gray-600">
+            Empieza a vender en minutos con estos simples pasos
+          </p>
+        </div>
+
+        <div class="space-y-8">
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">
+              1
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">
+                Instala y Configura
+              </h3>
+              <p class="text-lg text-gray-600">
+                Descarga e instala el sistema en tu computadora o servidor local. Configura tu tienda, usuarios, impresoras y métodos de pago en minutos.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">
+              2
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">
+                Carga tu Inventario
+              </h3>
+              <p class="text-lg text-gray-600">
+                Agrega tus productos con códigos de barras, precios y stock. Importa desde Excel o ingresa manualmente. Organiza por categorías para agilizar las ventas.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">
+              3
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">
+                Vende y Gestiona
+              </h3>
+              <p class="text-lg text-gray-600">
+                Escanea productos, cobra con efectivo o tarjeta e imprime tickets. Genera reportes de ventas, controla inventario y gestiona múltiples ubicaciones. Todo en una interfaz simple.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-dark section">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+          Moderniza tu Punto de Venta
+        </h2>
+        <p class="text-xl text-gray-300 mb-10">
+          Miles de negocios ya confían en nuestro sistema POS profesional
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={product.demoUrl} class="btn btn-primary text-lg px-8 py-4">
+            Ver Demo en Vivo
+          </a>
+          <a href="mailto:hola@garfenter.com" class="btn btn-secondary text-lg px-8 py-4 bg-white/10 border-white text-white hover:bg-white hover:text-gray-900">
+            Solicitar Instalación
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Garfenter POS",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Point of Sale System",
+  "operatingSystem": "Windows, Linux, macOS",
+  "description": "Sistema de punto de venta completo para pequeños y medianos negocios. Gestiona ventas, inventario, clientes y reportes. Funciona sin conexión a internet.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "GTQ",
+    "description": "Software profesional - Sin costo de licencia"
+  },
+  "softwareVersion": "3.x",
+  "creator": {
+    "@type": "Organization",
+    "name": "Garfenter Tech",
+    "url": "https://garfenter.com"
+  },
+  "featureList": [
+    "Escaneo de códigos de barras",
+    "Inventario en tiempo real",
+    "Reportes detallados",
+    "Multi-tienda",
+    "Modo offline",
+    "Impresión de tickets"
+  ],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Tiendas minoristas, Restaurantes y cafés, Farmacias, Ferreterías"
+  }
+}
+</script>

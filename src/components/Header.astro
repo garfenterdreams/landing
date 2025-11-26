@@ -1,0 +1,76 @@
+---
+interface Props {
+  variant?: 'default' | 'product';
+  productName?: string;
+}
+
+const { variant = 'default', productName } = Astro.props;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+  <nav class="container mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="gt-logo">
+      <div class="gt-logo-icon">GT</div>
+      <div class="gt-logo-text">
+        Garfenter <span>{productName || 'Tech'}</span>
+      </div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-6">
+      <a href="/#productos" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+        Productos
+      </a>
+      <a href="/#categorias" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+        Categorías
+      </a>
+      {variant === 'default' && (
+        <a href="https://demo.garfenter.com" class="btn btn-primary text-sm">
+          Ver Demos
+        </a>
+      )}
+      {variant === 'product' && (
+        <a href="/" class="btn btn-secondary text-sm">
+          ← Todos los Productos
+        </a>
+      )}
+    </div>
+
+    <!-- Mobile menu button -->
+    <button class="md:hidden p-2" id="mobile-menu-btn" aria-label="Menú">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="hidden md:hidden bg-white border-t border-gray-100 py-4" id="mobile-menu">
+    <div class="container mx-auto px-4 flex flex-col gap-4">
+      <a href="/#productos" class="text-gray-600 hover:text-gray-900 font-medium py-2">
+        Productos
+      </a>
+      <a href="/#categorias" class="text-gray-600 hover:text-gray-900 font-medium py-2">
+        Categorías
+      </a>
+      {variant === 'default' && (
+        <a href="https://demo.garfenter.com" class="btn btn-primary text-center">
+          Ver Demos
+        </a>
+      )}
+      {variant === 'product' && (
+        <a href="/" class="btn btn-secondary text-center">
+          ← Todos los Productos
+        </a>
+      )}
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

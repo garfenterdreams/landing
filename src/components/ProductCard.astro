@@ -1,0 +1,69 @@
+---
+import type { Product } from '../data/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const isComingSoon = product.status === 'coming-soon';
+---
+
+<a
+  href={isComingSoon ? '#' : `/${product.id}/`}
+  class:list={[
+    'card block relative group',
+    { 'coming-soon cursor-default': isComingSoon }
+  ]}
+>
+  <!-- Icon -->
+  <div
+    class="w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4"
+    style={`background: ${product.color}20;`}
+  >
+    {product.icon}
+  </div>
+
+  <!-- Category Badge -->
+  <span class="badge badge-primary mb-2">
+    {product.categoryLabel}
+  </span>
+
+  <!-- Title -->
+  <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+    {product.name}
+  </h3>
+
+  <!-- Subtitle -->
+  <p class="text-gray-600 text-sm mb-4">
+    {product.subtitle}
+  </p>
+
+  <!-- Features Preview -->
+  <div class="flex flex-wrap gap-2 mb-4">
+    {product.features.slice(0, 3).map(feature => (
+      <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+        {feature.icon} {feature.title}
+      </span>
+    ))}
+  </div>
+
+  <!-- CTA -->
+  {!isComingSoon && (
+    <div class="flex items-center text-blue-600 font-medium text-sm group-hover:gap-2 transition-all">
+      Ver más
+      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </div>
+  )}
+
+  {isComingSoon && (
+    <div class="flex items-center text-amber-600 font-medium text-sm">
+      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      Próximamente
+    </div>
+  )}
+</a>

@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProduct } from '../../data/products';
+
+const product = getProduct('delivery')!;
+const title = `Garfenter ${product.name} | ${product.title}`;
+const description = product.description;
+---
+
+<Layout title={title} description={description}>
+  <Header variant="product" productName={product.name} />
+
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-32 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm mb-6">
+            <span class="text-2xl">{product.icon}</span>
+            <span class="badge badge-primary">{product.categoryLabel}</span>
+          </div>
+
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+            {product.title}
+          </h1>
+
+          <p class="text-xl text-gray-600 mb-4">
+            {product.subtitle}
+          </p>
+
+          <p class="text-lg text-gray-700 mb-8">
+            {product.description}
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+            <a href={product.demoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary text-lg">
+              Ver Demo en Vivo
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+            <a href="#features" class="btn btn-secondary text-lg">
+              Conocer Más
+            </a>
+          </div>
+
+          <div class="mt-8 text-sm text-gray-500">
+            Basado en {product.basedOn}
+          </div>
+        </div>
+        <div class="animate-fade-in-up" style="animation-delay: 0.4s">
+          <picture>
+            <source srcset="/images/hero/delivery.webp" type="image/webp">
+            <img
+              src="/images/hero/delivery.png"
+              alt="Repartidor en motocicleta con bolsa de entregas"
+              class="rounded-2xl shadow-2xl w-full"
+              width="800"
+              height="450"
+              loading="eager"
+            >
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="section">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Características Principales
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Todo lo que necesitas para lanzar tu plataforma de delivery de comida
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {product.features.map(feature => (
+          <div class="card">
+            <div class="feature-icon">
+              {feature.icon}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              {feature.title}
+            </h3>
+            <p class="text-gray-600">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits/Stats Section -->
+  <section class="section-light">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        {product.benefits.map(benefit => (
+          <div class="bg-white rounded-xl p-8 shadow-sm">
+            <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800 mb-2">
+              {benefit.number}
+            </div>
+            <p class="text-lg text-gray-700 font-medium">
+              {benefit.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="section">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+          Ideal Para
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          {product.useCases.map(useCase => (
+            <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-lg">
+              <svg class="w-6 h-6 text-green-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <div>
+                <h3 class="font-semibold text-gray-900 text-lg">
+                  {useCase}
+                </h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section class="section-light">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+          Tecnología Moderna
+        </h2>
+        <div class="flex flex-wrap justify-center gap-4">
+          {product.techStack.map(tech => (
+            <span class="badge badge-primary px-4 py-2 text-base">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-dark">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+          Lanza Tu Plataforma de Delivery Hoy
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+          Empieza a competir con las grandes plataformas con tu propia solución de delivery.
+          Sin comisiones a terceros, control total de tu negocio.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={product.demoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary text-lg">
+            Ver Demo en Vivo
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </a>
+          <a href="mailto:contacto@garfenter.com" class="btn btn-secondary text-lg">
+            Contactar Ventas
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": `Garfenter ${product.name}`,
+  "applicationCategory": "BusinessApplication",
+  "description": product.description,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "operatingSystem": "Web",
+  "softwareVersion": "1.0",
+  "author": {
+    "@type": "Organization",
+    "name": "Garfenter Tech"
+  },
+  "featureList": product.features.map(f => f.title).join(", "),
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "127"
+  }
+})} />

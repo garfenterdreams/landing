@@ -1,0 +1,263 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getProduct } from '../../data/products';
+
+const product = getProduct('salud')!;
+const title = `Garfenter ${product.name} | ${product.title}`;
+const description = product.description;
+---
+
+<Layout title={title} description={description}>
+  <Header variant="product" productName={product.name} />
+
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-32 pb-20">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+        <div class="text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+            <span class="badge badge-warning">{product.categoryLabel}</span>
+            <span class="text-sm text-gray-600">Basado en {product.basedOn}</span>
+          </div>
+
+          <div class="text-6xl mb-6">{product.icon}</div>
+
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {product.title}
+          </h1>
+
+          <p class="text-xl text-gray-600 mb-8">
+            {product.subtitle}
+          </p>
+
+          <p class="text-lg text-gray-700 mb-8">
+            {product.description}
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href={product.demoUrl} class="btn btn-primary text-lg px-8 py-4">
+              Ver Demo en Vivo
+            </a>
+            <a href="/#productos" class="btn btn-secondary text-lg px-8 py-4">
+              Ver Más Productos
+            </a>
+          </div>
+        </div>
+        <div class="animate-fade-in-up" style="animation-delay: 0.4s">
+          <picture>
+            <source srcset="/images/hero/salud.webp" type="image/webp">
+            <img
+              src="/images/hero/salud.png"
+              alt="Recepción de hospital moderno"
+              class="rounded-2xl shadow-2xl w-full"
+              width="800"
+              height="450"
+              loading="eager"
+            >
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Características Principales
+        </h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Sistema hospitalario integral para mejorar la atención al paciente
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {product.features.map(feature => (
+          <div class="card">
+            <div class="feature-icon" style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);">
+              {feature.icon}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+              {feature.title}
+            </h3>
+            <p class="text-gray-600">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section section-light">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Beneficios Comprobados
+        </h2>
+        <p class="text-xl text-gray-600">
+          Implementado en centros de salud alrededor del mundo
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        {product.benefits.map(benefit => (
+          <div class="card text-center">
+            <div class="text-5xl font-bold text-red-600 mb-2">
+              {benefit.number}
+            </div>
+            <p class="text-lg text-gray-700 font-semibold">
+              {benefit.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          ¿Para Quién es Garfenter Salud?
+        </h2>
+        <p class="text-xl text-gray-600">
+          Solución completa para instituciones de salud
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {product.useCases.map(useCase => (
+          <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-lg">
+            <div class="text-2xl">💊</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-gray-900 mb-1">
+                {useCase}
+              </h3>
+              <p class="text-gray-600 text-sm">
+                {useCase === 'Hospitales' && 'Sistema completo para gestión hospitalaria con historiales médicos electrónicos, internaciones y quirófano.'}
+                {useCase === 'Clínicas' && 'Gestión de consultas, agenda médica, facturación y expedientes digitales en una sola plataforma.'}
+                {useCase === 'Centros de salud' && 'Solución escalable para centros de atención primaria con registro de pacientes y programas preventivos.'}
+                {useCase === 'Laboratorios clínicos' && 'Control de muestras, resultados de laboratorio e integración con equipos médicos automatizados.'}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section class="section section-light">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Cómo Funciona
+        </h2>
+        <p class="text-xl text-gray-600">
+          Digitaliza tu centro de salud en 3 pasos
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+            1
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Registra Pacientes
+          </h3>
+          <p class="text-gray-600">
+            Crea expedientes digitales completos con datos demográficos, contactos de emergencia e historial médico.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+            2
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Gestiona Consultas
+          </h3>
+          <p class="text-gray-600">
+            Agenda citas, registra signos vitales, diagnósticos y prescribe medicamentos desde el sistema.
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-red-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+            3
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            Integra Servicios
+          </h3>
+          <p class="text-gray-600">
+            Conecta laboratorio, farmacia y facturación para un flujo de trabajo completo e integrado.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-dark section">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Transforma la Gestión de tu Centro de Salud
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+          Únete a más de 500 hospitales que ya están mejorando la atención al paciente con sistemas de gestión hospitalaria profesionales.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={product.demoUrl} class="btn btn-primary text-lg px-8 py-4">
+            Ver Demo Médica
+          </a>
+          <a href="mailto:contacto@garfenter.com" class="btn btn-secondary text-lg px-8 py-4 bg-white/10 border-white hover:bg-white hover:text-gray-900">
+            Agendar Presentación
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Garfenter Salud",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Hospital Management Information System",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "ratingCount": "68"
+  },
+  "description": "Sistema hospitalario integral basado en HMIS/Bahmni. Registro de pacientes, citas médicas, laboratorio, farmacia y facturación. Funciona sin conexión a internet.",
+  "featureList": [
+    "Registro de pacientes completo",
+    "Gestión de citas médicas",
+    "Laboratorio clínico integrado",
+    "Control de farmacia",
+    "Facturación de servicios",
+    "Modo offline"
+  ],
+  "screenshot": "https://salud.garfenter.com/screenshot.png",
+  "softwareVersion": "1.0",
+  "url": "https://garfenter.com/salud/"
+}
+</script>

@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products, categories, getProductsByCategory } from '../data/products';
+
+const title = 'Garfenter Tech | Software Empresarial Profesional';
+const description = 'Soluciones de software profesional para tu negocio. E-commerce, POS, contabilidad, CRM y más. Tecnología empresarial para Guatemala y Latinoamérica.';
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <!-- Hero Section -->
+  <section class="hero-gradient pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+        <div class="text-center lg:text-left">
+          <span class="badge badge-primary mb-4 animate-fade-in-up">
+            Soluciones Empresariales
+          </span>
+          <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 animate-fade-in-up" style="animation-delay: 0.1s">
+            Software Empresarial
+            <span class="text-blue-600">Para Tu Negocio</span>
+          </h1>
+          <p class="text-xl text-gray-600 mb-8 animate-fade-in-up" style="animation-delay: 0.2s">
+            Soluciones profesionales para tu negocio. E-commerce, punto de venta, contabilidad, CRM y más.
+            Tecnología probada mundialmente, adaptada para Latinoamérica.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up" style="animation-delay: 0.3s">
+            <a href="#productos" class="btn btn-primary">
+              Ver Productos
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </a>
+            <a href="https://demo.garfenter.com" class="btn btn-secondary">
+              Probar Demos
+            </a>
+          </div>
+        </div>
+        <div class="animate-fade-in-up" style="animation-delay: 0.4s">
+          <picture>
+            <source srcset="/images/hero/hero.webp" type="image/webp">
+            <img
+              src="/images/hero/hero.png"
+              alt="Equipo profesional trabajando en oficina moderna"
+              class="rounded-2xl shadow-2xl w-full"
+              width="800"
+              height="450"
+              loading="eager"
+            >
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-12 bg-white border-b border-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-3xl md:text-4xl font-bold text-blue-600">12</div>
+          <div class="text-gray-600 text-sm mt-1">Productos Disponibles</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold text-green-600">$0</div>
+          <div class="text-gray-600 text-sm mt-1">Costo de Licencia</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold text-purple-600">100%</div>
+          <div class="text-gray-600 text-sm mt-1">Personalizable</div>
+        </div>
+        <div>
+          <div class="text-3xl md:text-4xl font-bold text-orange-600">24/7</div>
+          <div class="text-gray-600 text-sm mt-1">Disponibilidad</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section id="categorias" class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Soluciones por Categoría
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Encuentra el software perfecto para tu industria y necesidades específicas.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map(cat => (
+          <a href={`#${cat.id}`} class="card text-center hover:border-blue-200 border-2 border-transparent">
+            <div class="text-4xl mb-3">{cat.icon}</div>
+            <h3 class="font-bold text-gray-900 mb-1">{cat.label}</h3>
+            <p class="text-gray-600 text-sm">{cat.description}</p>
+            <div class="mt-3 text-blue-600 text-sm font-medium">
+              {getProductsByCategory(cat.id).length} productos →
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="productos" class="section section-light">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Todos los Productos
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Explora nuestra suite completa de soluciones empresariales profesionales.
+        </p>
+      </div>
+
+      {categories.map(cat => (
+        <div id={cat.id} class="mb-16 last:mb-0">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-2xl">{cat.icon}</span>
+            <h3 class="text-2xl font-bold text-gray-900">{cat.label}</h3>
+            <span class="badge badge-primary">{getProductsByCategory(cat.id).length}</span>
+          </div>
+          <div class="grid-products">
+            {getProductsByCategory(cat.id).map(product => (
+              <ProductCard product={product} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Why Garfenter Section -->
+  <section class="section bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            ¿Por Qué Garfenter?
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="feature-icon mx-auto">💰</div>
+            <h3 class="font-bold text-gray-900 mb-2">Costos Accesibles</h3>
+            <p class="text-gray-600 text-sm">
+              Software empresarial de clase mundial a precios accesibles para tu negocio.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">🔧</div>
+            <h3 class="font-bold text-gray-900 mb-2">100% Personalizable</h3>
+            <p class="text-gray-600 text-sm">
+              Adaptamos las soluciones exactamente a las necesidades de tu empresa.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);">🔒</div>
+            <h3 class="font-bold text-gray-900 mb-2">Tus Datos, Tu Control</h3>
+            <p class="text-gray-600 text-sm">
+              Mantén el control total sobre tus datos sin depender de terceros.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-dark section">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        ¿Listo para Empezar?
+      </h2>
+      <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
+        Explora nuestros demos en vivo y descubre cómo estas soluciones pueden transformar tu negocio.
+      </p>
+      <a href="https://demo.garfenter.com" class="btn btn-primary text-lg">
+        Ver Demos en Vivo
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Garfenter Tech",
+  "url": "https://garfenter.com",
+  "description": "Software empresarial profesional para negocios en Latinoamérica"
+})} />
