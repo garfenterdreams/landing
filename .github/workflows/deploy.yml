@@ -59,17 +59,25 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Deploy to production server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ec2-user/garfenter
+            # Login to ECR and pull latest image
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ steps.tags.outputs.registry }}
+            docker compose pull nginx
+            docker compose up -d nginx
+            echo "Deployed: ${{ steps.tags.outputs.full_image }}"
+
       - name: Output image details
         run: |
-          echo "### Landing page image pushed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "### Landing page deployed successfully" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Tag:** ${{ steps.tags.outputs.image_tag }}" >> $GITHUB_STEP_SUMMARY
           echo "**Image:** ${{ steps.tags.outputs.full_image }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "To deploy this version, update \`image_tags.landing\` in Terraform:" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`hcl" >> $GITHUB_STEP_SUMMARY
-          echo "image_tags = {" >> $GITHUB_STEP_SUMMARY
-          echo "  landing = \"${{ steps.tags.outputs.image_tag }}\"" >> $GITHUB_STEP_SUMMARY
-          echo "  # ... other tags" >> $GITHUB_STEP_SUMMARY
-          echo "}" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployed to:** http://${{ secrets.SERVER_HOST }}" >> $GITHUB_STEP_SUMMARY
